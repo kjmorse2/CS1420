@@ -1,0 +1,49 @@
+package lecture3;
+
+public class Lecture3 {
+
+	public static void main(String[] args) {
+	// boolean data types 
+		
+		 boolean isStudent = false; 
+		 
+		 int netWorth = 500; 
+		 
+		 boolean isWealthy = netWorth >= 100000;
+		 
+		 System.out.println(isWealthy);
+		 // for integers (and chars?)
+		 // >=, <=, ==, != 
+		 
+		 System.out.println((.1+.1+.1) == .3); // comes to false because of rounding error
+		 // solve by checking small enough difference
+
+		 // object types: 
+		 // only == and != 
+		 // use methods to compare objects
+		 String name1 = "Ben";
+		 String name2 = "ben";
+		 
+		 System.out.println("same name?: " + name1.equals(name2));
+		 
+		 
+		 int myAge = 24;
+		 int yourAge = 23;
+		 
+		 boolean differentNames = !name1.equals(name2);
+		 boolean sameAge = myAge == yourAge;
+		 
+		
+		 
+		 // and (&&) take 2 booleans and is true when both inputs are true
+		 boolean samePerson = sameAge && name1.equals(name2);
+		 System.out.println("same person?: " + samePerson);
+		 
+		 // or (||) take 2 booleans, and is true if either/both are true
+		 boolean wantToBeFriends = sameAge || isWealthy;
+		 System.out.println("freinds?: " + wantToBeFriends);
+		 
+		 System.out.println(false == false);
+	}
+
+}

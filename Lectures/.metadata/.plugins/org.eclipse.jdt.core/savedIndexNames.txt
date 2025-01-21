@@ -1,0 +1,6 @@
+INDEX VERSION 1.134+/Users/kjmorse2/eclipse-workspace/CS1420/Lectures/.metadata/.plugins/org.eclipse.jdt.core
+1865797976.index
+1158083637.index
+838976675.index
+2892321024.index
+3692012943.index

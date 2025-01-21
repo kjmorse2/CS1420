@@ -1,0 +1,10 @@
+package assign00;
+
+public class test {
+
+	public static void main(String[] args) {
+		System.out.printf("%1.2f", 3.14); 
+
+	}
+
+}

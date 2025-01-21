@@ -1,0 +1,33 @@
+package assign02;
+import java.util.Scanner;
+
+public class RandomGenerator {
+
+	public static void main(String[] args) {
+		Scanner input = new Scanner(System.in);
+		System.out.print("What is Your Name?: ");
+		String name = input.next();
+		int sum = 0;
+		
+		System.out.println(name);
+		
+		for(int i = 0; i < name.length(); i++) {
+			sum += name.charAt(i);
+		}
+		
+		int[] luckyNums = new int[5];
+		int place = 0;
+		System.out.print("Lucky numbers: ");
+		
+		while(place < 5) {
+			sum = (73*sum + 37) % 128;
+			if(sum<=100) {
+				luckyNums[place] = sum;
+				System.out.print(luckyNums[place] + " ");
+				place += 1;
+			}
+		}
+		input.close();
+	}
+
+}

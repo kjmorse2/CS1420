@@ -1,0 +1,10 @@
+package assign00;
+
+public class HelloCS1420 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
