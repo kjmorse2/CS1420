@@ -56,7 +56,7 @@ public class RandomGenerator {
 		input.close();
 		System.out.println("Goodbye");
 		
-		
+		// testing this work please man please
 	}
 
 }
