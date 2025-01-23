@@ -14,15 +14,16 @@ import java.util.Scanner;
  *  
  *  ... but it isn't working. Please fix it.
  *  You must NOT use String's toUpperCase or toLowerCase methods.
- *  
+ *  Class: CS1420
+ *  Assignment 2: Fix the code
  *  @author Eric Heisler and Kenneth Morse
- *  @version 1/15/2025
+ *  @version 1/23/2025
  */
 public class FixMe {
 
     public static void main(String[] args) {
+    	
         Scanner input = new Scanner(System.in);
-        
         System.out.println("Please enter a word:");
         String word = input.next();
         String lowerCase = "";

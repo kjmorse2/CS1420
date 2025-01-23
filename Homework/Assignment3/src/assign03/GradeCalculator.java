@@ -88,8 +88,8 @@ public class GradeCalculator {
 	
 			String[] statements = createStatements();
 			
-			String finalGrades = String.format("%.2f", avgAssignment) + '\n' + zeroAssignments + '\n' + highestAssignment 
-					+ "\n" + lowestAssignment + '\n' + totalGrade + '\n' + letterGrade + '\n';
+			String finalGrades = String.format("%.2f", avgAssignment + '\n' + zeroAssignments + '\n' + highestAssignment 
+					+ "\n" + lowestAssignment + '\n' + totalGrade + '\n' + letterGrade + '\n');
 			
 			int beginningIndex = 0;
 			
