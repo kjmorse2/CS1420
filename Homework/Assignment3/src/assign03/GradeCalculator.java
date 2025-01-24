@@ -7,114 +7,44 @@ import java.io.FileNotFoundException;
 public class GradeCalculator {
 
 	public static void main(String[] args) throws FileNotFoundException {
-
-		try {
-			Scanner fileInput = new Scanner(grades);
-
-			double avgExam = fileInput.nextDouble();
-			double avgLab = fileInput.nextDouble();
-			double avgQuiz = fileInput.nextDouble();
-			int numAssignments = fileInput.nextInt();
-
-			int assignmentGradeSum = 0;
-			int highestAssignment = 0;
-			int lowestAssignment = 101;
-			int numZeroAssignments = 0;
-			String letterGrade = "";
-			String zeroAssignments = "";
-
-			int[] assignmentGrades = new int[numAssignments];
-
-			for (int i = 0; i < numAssignments; i++) {
-				assignmentGrades[i] = fileInput.nextInt();
-			}
-
-			for (int i : assignmentGrades) {
-				assignmentGradeSum += i;
-				if (i == 0) {
-					zeroAssignments = zeroAssignments.concat(numZeroAssignments + " ");
-				}
-
-				if (i > highestAssignment) {
-					highestAssignment = i;
-				}
-
-				if (i < lowestAssignment) {
-					lowestAssignment = i;
-				}
-
-				numZeroAssignments += 1;
-			}
-
-			double avgAssignment = (double) assignmentGradeSum / numAssignments;
-
-			double totalGrade = (0.45 * avgExam) + (0.35 * avgAssignment) + (0.1 * avgLab) + (0.1 * avgQuiz);
-
-			int tens = (int) totalGrade / 10;
-			int ones = (int) totalGrade % 10;
-
-			if (tens < 6) {
-				letterGrade = "E";
-			} else if (tens >= 9) {
-				letterGrade = "A";
-			} else if (tens >= 8) {
-				letterGrade = "B";
-			} else if (tens >= 7) {
-				letterGrade = "C";
-			} else if (tens >= 6) {
-				letterGrade = "D";
-			}
-
-			if (ones >= 0 && ones < 3) {
-				letterGrade = letterGrade.concat("-");
-			} else if (ones >= 7 && ones < 10) {
-				letterGrade = letterGrade.concat("+");
-			}
-
-			String[] statements = createStatements();
-
-			String finalGrades = String.format("%.2f", avgAssignment + '\n' + zeroAssignments + '\n' + highestAssignment
-					+ "\n" + lowestAssignment + '\n' + totalGrade + '\n' + letterGrade + '\n');
-
-			int beginningIndex = 0;
-
-			String finalString = "";
-
-			String currentPrint = "";
-
-			for (int i = 0; i <= 5; i++) {
-				finalString = finalString.concat(statements[i] + ": ");
-				int nextIndex = finalGrades.indexOf('\n') + 1;
-				currentPrint = finalGrades.substring(beginningIndex, nextIndex);
-				finalString = finalString.concat(currentPrint);
-				finalGrades = finalGrades.substring(nextIndex);
-			}
-
-			System.out.print(finalString);
-			fileInput.close();
-		} catch (FileNotFoundException e) {
-			System.out.println("File not found. Please check the path and try again.");
+		
+		String[] statements = createStatements();
+		
+		Scanner userInput = new Scanner(System.in);
+		System.out.println("input the path to file containing grades: ");
+		
+		String fileLocation = userInput.next();
+		
+		File file = new File(fileLocation);
+		userInput.close();
+		
+		gradeSummary Grades = new gradeSummary(file);
+		
+		Grades.calcAssignmentGrade(Grades.assignmentGrades);
+		Grades.assignmentsScoredZero(Grades.assignmentGrades);
+		Grades.finalGrade(Grades.avgExam, Grades.avgAssignment, Grades.avgLab, Grades.avgQuiz);
+		String[] printGrades = Grades.readyToPrint();
+		
+		for(int i = 0; i < printGrades.length; i++) {
+			System.out.println(statements[i] + ": " + printGrades[i]);
 		}
-
 	}
 
-	public class gradeSummary{
+
+	public static class gradeSummary {
 		double avgExam;
 		double avgLab;
 		double avgQuiz;
 		double avgAssignment;
-		int [] assignmentGrades;
+		int maxAssignment;
+		int minAssignment;
 		double finalGrade;
+		int [] assignmentGrades;
+		int [] zeroAssignments;
+		String letterGrade;
+		String[] printGrades;
 		
-		public gradeSummary() {
-			Scanner userInput = new Scanner(System.in);
-			System.out.println("input the path to file containing grades: ");
-			
-			String fileLocation = userInput.next();
-			
-			File grades = new File(fileLocation);
-			userInput.close();
-			
+		public gradeSummary(File grades){
 			try {
 				Scanner fileInput = new Scanner(grades);
 				
@@ -135,25 +65,99 @@ public class GradeCalculator {
 			}
 		}
 		
-		public void calcAssignmentGrade(int[] assignments) {
+		public double calcAssignmentGrade(int[] assignments) {
 			int sum = 0;
+			maxAssignment = assignmentGrades[0];
+			minAssignment = assignmentGrades[0];
 			
 			for (int i : assignments) {
 				sum += i;
+				
+				if(i > maxAssignment) {
+					maxAssignment = i;
+				}
+				else if(i < minAssignment) {
+					minAssignment = i;
+				}
+				
 				}
 			double avg = (double) sum / assignments.length;
 			
 			avgAssignment = avg;
+			
+			return avgAssignment;
 		}
 		
-		public double calcFinalGrade() {
+		public double finalGrade(double avgExam, double avgAssignment, double avgLab, double avgQuiz) {
 			finalGrade = (0.45 * avgExam) + (0.35 * avgAssignment) + (0.1 * avgLab) + (0.1 * avgQuiz);
+			letterGrade(finalGrade);
 			return finalGrade;
 		}
 		
+		public String letterGrade(double finalGrade) {
+			letterGrade = "";
+			int tens = (int) finalGrade / 10;
+			int ones = (int) finalGrade % 10;
+
+			if (tens < 6) {
+				letterGrade = "E";
+			} else if (tens >= 9) {
+				letterGrade = "A";
+			} else if (tens >= 8) {
+				letterGrade = "B";
+			} else if (tens >= 7) {
+				letterGrade = "C";
+			} else if (tens >= 6) {
+				letterGrade = "D";
+			}
+
+			if (ones >= 0 && ones < 3) {
+				letterGrade = letterGrade.concat("-");
+			} else if (ones >= 7 && ones < 10) {
+				letterGrade = letterGrade.concat("+");
+			}
+			
+			return letterGrade;
+		}
+		
+		public int[] assignmentsScoredZero(int[] assignmentGrades) {
+			int numZeroAssignments = 0;
+			for(int i : assignmentGrades) {
+				if(i == 0) {
+					numZeroAssignments +=1;
+				}
+			}
+			
+			zeroAssignments = new int[numZeroAssignments];
+			int index = 0;
+			for(int i = 0; i < assignmentGrades.length; i++) {
+				if(assignmentGrades[i] == 0) {
+					zeroAssignments[index] = i; 
+					index ++;
+				}
+			}
+			
+			return zeroAssignments;
+		}
+		
+		public String[] readyToPrint(){
+			String temp = "";
+			printGrades = new String[6];
+			printGrades[0] = String.valueOf(avgAssignment);
+			printGrades[2] = String.valueOf(maxAssignment);
+			printGrades[3] = String.valueOf(minAssignment);
+			printGrades[4] = String.format("%.2f", finalGrade);
+			printGrades[5] = letterGrade;
+			
+			for(int i : zeroAssignments) {
+				temp = temp.concat(" " + i);
+			}
+			printGrades[1] = temp;
+			return printGrades;					
+		}
 		
 	}
-
+	
 	
 	public static final String[] createStatements() {
 		String[] statements = new String[6];
@@ -164,8 +168,8 @@ public class GradeCalculator {
 		statements[4] = "Course grade (numeric)";
 		statements[5] = "Course grade (letter)";
 		return statements;
-		}
-	
+	}
 }
+	
 
 
