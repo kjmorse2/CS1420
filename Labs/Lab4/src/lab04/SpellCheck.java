@@ -17,7 +17,7 @@ public class SpellCheck {
 			// int wordCount = countWords(file);
 			System.out.println("Provide a word:");
 			Scanner userInput = new Scanner(System.in);
-			String spellCheck = userInput.next();
+			String spellCheck = userInput.nextLine();
 			spellCheck = spellCheck.toLowerCase();
 			String response = getClosestWord(spellCheck, file);
 			
