@@ -18,6 +18,7 @@ public class Lecture6Main {
 	// type: input type: does not need input
 	// type: availability, only available from Lecture6Main class
 	// value: written code below, look at it
+	@SuppressWarnings("unused")
 	private static Double readNumberFromConsole() {
 		Scanner input = new Scanner(System.in);
 		Double nextInput = 0.0;
@@ -65,6 +66,7 @@ public class Lecture6Main {
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	private static int doublesInt(int x) { // signature of function, name, return type, status
 		return 2*x;
 	}

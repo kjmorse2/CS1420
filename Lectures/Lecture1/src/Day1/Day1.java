@@ -1,6 +1,7 @@
 package Day1;
 
 public class Day1{ // ignore me
+	@SuppressWarnings("unused")
 	public static void main(String[] args ) {
 		// this is a single line comment
 		// System.out.println("hello world")

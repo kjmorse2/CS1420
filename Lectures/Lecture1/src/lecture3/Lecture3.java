@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class Lecture3 {
 
+	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		// boolean data types
 
@@ -43,7 +44,7 @@ public class Lecture3 {
 		// (myAge == yourAge) || (netWorth >= 100000 // Much less readable
 		System.out.println("freinds?: " + wantToBeFriends);
 
-		System.out.println(false == false);
+		// System.out.println(false == false);
 
 		// control flow
 		if (wantToBeFriends) {
