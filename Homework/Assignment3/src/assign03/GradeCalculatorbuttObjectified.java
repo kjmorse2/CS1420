@@ -3,7 +3,7 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.IOException;
 
-public class GradeCalculator2ImDumb {
+public class GradeCalculatorbuttObjectified {
 
 	// main method where instructions will be executed, including 
 	// input logic and calling of GradeSummary methods

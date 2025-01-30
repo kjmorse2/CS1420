@@ -1,184 +1,161 @@
 package assign03;
 
+/**
+* Class: CS 1420
+* Assignment 3: Grade Calculator
+* @author Kenneth Morse
+* @version 1/29/2025
+*/
+
 import java.util.Scanner;
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class GradeCalculator {
 
-	public static void main(String[] args) throws FileNotFoundException {
-		
-		String[] statements = createStatements();
-		
+	public static void main(String[] args) {
+		// start of main method, gets file path from system.in, repeats if file is not found
 		Scanner userInput = new Scanner(System.in);
-		System.out.println("input the path to file containing grades: ");
-		
-		String fileLocation = userInput.next();
-		
-		File file = new File(fileLocation);
+		Scanner fileInput;
+		File gradesRaw;
+		String filePath;
+
+		while (true) {
+			System.out.println("Input the path to a file containing your formated grades");
+
+			filePath = userInput.next();
+			gradesRaw = new File(filePath);
+
+			try {
+				fileInput = new Scanner(gradesRaw);
+				break; // if successful, breaks out of infinite loop
+			} catch (IOException e) {
+				System.out.println("Not a valid file path, try again");
+			}
+		}
 		userInput.close();
+
 		
-		gradeSummary Grades = new gradeSummary(file);
 		
-		Grades.calcAssignmentGrade(Grades.assignmentGrades);
-		Grades.assignmentsScoredZero(Grades.assignmentGrades);
-		Grades.finalGrade(Grades.avgExam, Grades.avgAssignment, Grades.avgLab, Grades.avgQuiz);
-		String[] printGrades = Grades.readyToPrint();
-		
-		for(int i = 0; i < printGrades.length; i++) {
-			System.out.println(statements[i] + ": " + printGrades[i]);
+		// reads all necessary info from file into variables
+		double avgExam = fileInput.nextDouble();
+		double avgLab = fileInput.nextDouble();
+		double avgQuiz = fileInput.nextDouble();
+		int numAssignments = fileInput.nextInt();
+		int[] assignmentGrades = new int[numAssignments];
+
+		for (int i = 0; i < assignmentGrades.length; i++) {
+			assignmentGrades[i] = fileInput.nextInt();
 		}
-	}
 
+		fileInput.close();
 
-	public static class gradeSummary {
-		// read from file
-		double avgExam;
-		double avgLab;
-		double avgQuiz;
-		int [] assignmentGrades;
 		
-		//calculated/evaluated after reading
-		double avgAssignment;
-		double finalGrade;
-		int maxAssignment;
-		int minAssignment;
-		int [] zeroAssignments;
-		String letterGrade;
-		String[] printGrades;
 		
-		public gradeSummary(File grades){
-			
-			Scanner fileInput;
-			while(true) {
-				try {
-					fileInput = new Scanner(grades);
-					break;
-				} catch(FileNotFoundException e) {
-					System.out.println("File not found. Please check the path and try again.");
-				}
+		// calculates average assignment grade along with the extreme scores on
+		// assignments
+		int sum = 0;
+		int maxAssignment = assignmentGrades[0];
+		int minAssignment = assignmentGrades[0];
+
+		for (int grade : assignmentGrades) {
+			sum += grade;
+			if (grade > maxAssignment) {
+				maxAssignment = grade; // FINAL OUTPUT
+			} else if (grade < minAssignment) {
+				minAssignment = grade; // FINAL OUTPUT
 			}
-				
-				
-				avgExam = fileInput.nextDouble();
-				avgLab = fileInput.nextDouble();
-				avgQuiz = fileInput.nextDouble();
-				int numAssignments = fileInput.nextInt();
-				
-				assignmentGrades = new int[numAssignments];
-				
-				for(int i = 0; i < assignmentGrades.length; i++) {
-					assignmentGrades[i] = fileInput.nextInt();
-				}
-				
-				fileInput.close();
-			}
-		
-		public double calcAssignmentGrade(int[] assignments) {
-			int sum = 0;
-			maxAssignment = assignmentGrades[0];
-			minAssignment = assignmentGrades[0];
-			
-			for (int i : assignments) {
-				sum += i;
-				
-				if(i > maxAssignment) {
-					maxAssignment = i;
-				}
-				else if(i < minAssignment) {
-					minAssignment = i;
-				}
-				
-				}
-			double avg = (double) sum / assignments.length;
-			
-			avgAssignment = avg;
-			
-			return avgAssignment;
 		}
-		
-		public double finalGrade(double avgExam, double avgAssignment, double avgLab, double avgQuiz) {
-			finalGrade = (0.45 * avgExam) + (0.35 * avgAssignment) + (0.1 * avgLab) + (0.1 * avgQuiz);
-			letterGrade(finalGrade);
-			return finalGrade;
-		}
-		
-		public String letterGrade(double finalGrade) {
-			letterGrade = "";
-			int tens = (int) finalGrade / 10;
-			int ones = (int) finalGrade % 10;
 
-			if (tens < 6) {
-				letterGrade = "E";
-			} else if (tens >= 9) {
-				letterGrade = "A";
-			} else if (tens >= 8) {
-				letterGrade = "B";
-			} else if (tens >= 7) {
-				letterGrade = "C";
-			} else if (tens >= 6) {
-				letterGrade = "D";
+		double avgAssignment = (double) sum / assignmentGrades.length; // FINAL OUTPUT
+
+		
+		
+		/*
+		 * first figures out how many assignments were scored zero, then fills created
+		 * array with indices of those assignments
+		 */
+		int numZeroAssignments = 0;
+
+		for (int i : assignmentGrades) {
+			if (i == 0) {
+				numZeroAssignments += 1;
 			}
+		}
 
+		int[] zeroAssignments = new int[numZeroAssignments]; // FINAL OUTPUT
+		int independentIndex = 0;
+
+		for (int i = 0; i < assignmentGrades.length; i++) {
+			if (assignmentGrades[i] == 0) {
+				zeroAssignments[independentIndex] = i;
+				independentIndex++;
+			}
+		}
+
+		
+		
+		/* calculates final grade based on weights given in syllabus and then uses 
+		if/else branching to assign letter grade */
+		double finalGrade = (0.45 * avgExam) + (0.35 * avgAssignment) + (0.1 * avgLab) + (0.1 * avgQuiz); // FINAL OUTPUT
+
+		String letterGrade = ""; // FINAL OUTPUT
+		int tens = (int) finalGrade / 10;
+		int ones = (int) finalGrade % 10;
+
+		if (tens >= 9) {
+			letterGrade = "A";
+		} else if (tens >= 8) {
+			letterGrade = "B";
+		} else if (tens >= 7) {
+			letterGrade = "C";
+		} else if (tens >= 6) {
+			letterGrade = "D";
+		} else { // tens < 6
+			letterGrade = "E";
+		}
+
+		if (!letterGrade.equals("E")) {
 			if (ones >= 0 && ones < 3) {
 				letterGrade = letterGrade.concat("-");
 			} else if (ones >= 7 && ones < 10) {
 				letterGrade = letterGrade.concat("+");
 			}
-			
-			return letterGrade;
 		}
+
 		
-		public int[] assignmentsScoredZero(int[] assignmentGrades) {
-			int numZeroAssignments = 0;
-			for(int i : assignmentGrades) {
-				if(i == 0) {
-					numZeroAssignments +=1;
-				}
-			}
-			
-			zeroAssignments = new int[numZeroAssignments];
-			int index = 0;
-			for(int i = 0; i < assignmentGrades.length; i++) {
-				if(assignmentGrades[i] == 0) {
-					zeroAssignments[index] = i; 
-					index ++;
-				}
-			}
-			
-			return zeroAssignments;
+		
+		// formats grades into string[] to be printed using a for loop
+		String zeroAssignmentsString  = "";
+		String[] printGrades = new String[6];
+		printGrades[0] = String.format("%.2f", avgAssignment);
+
+		for (int i : zeroAssignments) {
+			zeroAssignmentsString  = zeroAssignmentsString .concat(i + " ");
 		}
+		printGrades[1] = zeroAssignmentsString ;
 		
-		public String[] readyToPrint(){
-			String temp = "";
-			printGrades = new String[6];
-			printGrades[0] = String.valueOf(avgAssignment);
-			printGrades[2] = String.valueOf(maxAssignment);
-			printGrades[3] = String.valueOf(minAssignment);
-			printGrades[4] = String.format("%.2f", finalGrade);
-			printGrades[5] = letterGrade;
-			
-			for(int i : zeroAssignments) {
-				temp = temp.concat(" " + i);
-			}
-			printGrades[1] = temp;
-			return printGrades;					
-		}
+		printGrades[2] = String.valueOf(maxAssignment);
+		printGrades[3] = String.valueOf(minAssignment);
+		printGrades[4] = String.format("%.2f", finalGrade);
+		printGrades[5] = letterGrade;
+
 		
-	}
-	
-	
-	public static final String[] createStatements() {
+		
+		// creates statements required by output
 		String[] statements = new String[6];
-		statements[0] = "Average assignment score";
-		statements[1] = "0 points on assignment(s)";
-		statements[2] = "Highest assignment score";
-		statements[3] = "Lowest assignment score";
-		statements[4] = "Course grade (numeric)";
-		statements[5] = "Course grade (letter)";
-		return statements;
+		statements[0] = "Average assignment score: ";
+		statements[1] = "0 points on assignment(s): ";
+		statements[2] = "Highest assignment score: ";
+		statements[3] = "Lowest assignment score: ";
+		statements[4] = "Course grade (numeric): ";
+		statements[5] = "Course grade (letter): ";
+
+		
+		
+		// prints final output
+		for (int i = 0; i < statements.length; i++) {
+			System.out.println(statements[i] + printGrades[i]);
+		}
 	}
 }
-	
-
-
