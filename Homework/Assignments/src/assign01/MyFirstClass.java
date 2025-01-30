@@ -1,4 +1,4 @@
-package lab01;
+package assign01;
 
 public class MyFirstClass {
 
