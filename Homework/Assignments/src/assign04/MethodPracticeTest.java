@@ -30,5 +30,12 @@ class MethodPracticeTest {
 		assertEquals(MethodPractice.sumInRange(0, 10), 55, "Summing numbers between given indices inclusive");
 		
 	}
+	
+	@Test
+	@DisplayName("Testing shiftCipher")
+	void testshiftCipher() {
+		assertTrue(MethodPractice.shiftCipher("abcdefghijklmnopqrstuvwxyz", 11).equals("lmnopqrstuvwxyz{|}~ !\\\"#$%&"));
+		assertEquals(MethodPractice.shiftCipher("The quick brown fox jumped over the lazy dog!~~~}}}", 1), "Uzqf!Qmbjo!Ufyu!Ifsf;!!Uif!rvjdl!cspxo!gpy!kvnqfe!pwfs!uif!mb{z!eph\"   ~~~");
+	}
 
 }

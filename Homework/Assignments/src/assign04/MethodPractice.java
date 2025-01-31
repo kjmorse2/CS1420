@@ -1,5 +1,9 @@
 package assign04;
 
+import java.util.Arrays;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 /**
 * Class: CS 1420
 * Assignment 4: Method Practice
@@ -7,13 +11,12 @@ package assign04;
 * @version 1/30/2025
 */
 
-import java.util.InputMismatchException;
-import java.util.Scanner;
 
 public class MethodPractice {
 	// System.out.println("Checking _. Expecting a result of _. The actual result is " + _);
 
 	public static void main(String[] args) {
+		System.out.println(MethodPractice.shiftCipher("dog", 1));
 		// Test litersToGallons
 			//Testing expected 0
 		System.out.println("Checking litersToGallons(3.7). Expecting a result of 0. The actual result is " + litersToGallons(3.7));
@@ -24,14 +27,25 @@ public class MethodPractice {
 			// Testing negative number
 		System.out.println("Checking sumInRange(-4, 10). Expecting a result of 45. The actual result is " + sumInRange(-4, 10));
 			// Testing all positive 
-		System.out.println("Checking sumInRange(0, 10). Expecting a result of 55. The actual result is " + sumInRange(-4, 10));
+		System.out.println("Checking sumInRange(0, 10). Expecting a result of 55. The actual result is " + sumInRange(0, 10));
 		
 		//Test shiftCypher
 			// full alphabet test
-		System.out.println("Checking shiftCipher(\"abcdefghijklmnopqrstuvwxyz\", 11). Expecting a result of lmnopqrstuvwxyz{|}~ !\"#$%&\n"
-				+ ". The actual result is " + shiftCipher("abcdefghijklmnopqrstuvwxyz", 11));
+		System.out.println("Checking shiftCipher(\"abcdefghijklmnopqrstuvwxyz\", 11). Expecting a result of lmnopqrstuvwxyz{|}~ !\"#$%&. The actual result is " + (String)shiftCipher("abcdefghijklmnopqrstuvwxyz", 11));
 		
-		//test
+		//Test countIntegerZeros
+		System.out.println("Checking countIntegerZeros(new Scanner(\"hello 0 10 0.0 string0 0\"). Expecting a result of 2. The actual result is " + countIntegerZeros(new Scanner("hello 0 10 0.0 string0 0")));
+		System.out.println("Checking countIntegerZeros(new Scanner(\"hello 1 10 0.0 string0 2 6 5 77 j67 j083aks 0a\"). Expecting a result of 0. The actual result is " + countIntegerZeros(new Scanner("hello 1 10 0.0 string0 2 6 5 77 j67 j083aks 0a")));
+
+		//Test subsequenceString
+		System.out.println("Checking subsequenceString(new char[]{'t', 'o', 'd', 'o', 'g', 'o'}, 2, 4). Expecting a result of dog. The actual result is " + subsequenceString(new char[]{'t', 'o', 'd', 'o', 'g', 'o'}, 2, 4));
+		System.out.println("Checking subsequenceString(new char[]{'t', 'o', 'd', 'o', 'g', 'o'}, 1, 6). Expecting a result of . The actual result is " + subsequenceString(new char[]{'t', 'o', 'd', 'o', 'g', 'o'}, 1, 6));
+		
+		// Test generateCharArray
+		System.out.println("Checking generateCharArray(5). Expecting a result of  [A, B, C, D, E]. The actual result is " + Arrays.toString(generateCharArray(5)));
+		
+		// Test mysteryMessage
+		// Test generateCharArray
 
 	}
 	/**
@@ -66,10 +80,10 @@ public class MethodPractice {
 		String encrypted = "";
 		
 		for(int i = 0; i < message.length(); i++) {
-		    if(message.charAt(i) + key > 126)
-		        encrypted = encrypted + (message.charAt(i) + key - 127 + 32);
+		    if(message.charAt(i) + key >= 126)
+		        encrypted = encrypted + (char)(message.charAt(i) + key - 127 + 32);
 		    else
-		        encrypted = encrypted + (message.charAt(i) + key);
+		        encrypted = encrypted + (char)(message.charAt(i) + key);
 		}
 		return encrypted;
 	}

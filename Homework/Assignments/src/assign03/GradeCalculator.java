@@ -96,13 +96,15 @@ public class GradeCalculator {
 		
 		
 		/* calculates final grade based on weights given in syllabus and then uses 
-		if/else branching to assign letter grade */
+		if/else branching to assign letter grade. Ensures to handle edge cases 
+		concerning E+/E- and A+, as these grades do not exist per the syllabus */
 		double finalGrade = (0.45 * avgExam) + (0.35 * avgAssignment) + (0.1 * avgLab) + (0.1 * avgQuiz); // FINAL OUTPUT
 
 		String letterGrade = ""; // FINAL OUTPUT
 		int tens = (int) finalGrade / 10;
 		int ones = (int) finalGrade % 10;
-
+		
+		
 		if (tens >= 9) {
 			letterGrade = "A";
 		} else if (tens >= 8) {
@@ -111,18 +113,17 @@ public class GradeCalculator {
 			letterGrade = "C";
 		} else if (tens >= 6) {
 			letterGrade = "D";
-		} else { // tens < 6
+		} else {
 			letterGrade = "E";
 		}
-
-		if (!letterGrade.equals("E")) {
+		
+		if(!letterGrade.equals("E") && !(finalGrade>=100)){
 			if (ones >= 0 && ones < 3) {
 				letterGrade = letterGrade.concat("-");
-			} else if (ones >= 7 && ones < 10) {
+			} else if (ones >= 7 && ones < 10 && !letterGrade.equals("A") ) {
 				letterGrade = letterGrade.concat("+");
 			}
 		}
-
 		
 		
 		// formats grades into string[] to be printed using a for loop
