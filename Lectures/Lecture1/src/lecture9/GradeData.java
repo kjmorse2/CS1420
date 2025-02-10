@@ -11,6 +11,7 @@ public class GradeData {
 	// every GradeData object has a grade and a name
 	// hide these values, and include getters to access them
 	// prevents changing from outside the object itself 
+	// breaks code, must write getters
 	private Integer grade;
 	private String name;
 	
