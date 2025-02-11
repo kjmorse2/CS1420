@@ -16,7 +16,7 @@ public class MethodPractice {
 	// System.out.println("Checking _. Expecting a result of _. The actual result is " + _);
 
 	public static void main(String[] args) {
-		System.out.println(MethodPractice.shiftCipher("dog", 1));
+		System.out.println(subsequenceString(new char[]{'w', 'h', 'o', 'a'}, 0, 2));
 		// Test litersToGallons
 			//Testing expected 0
 		System.out.println("Checking litersToGallons(3.7). Expecting a result of 0. The actual result is " + litersToGallons(3.7));
@@ -46,6 +46,8 @@ public class MethodPractice {
 		
 		// Test mysteryMessage
 		// Test generateCharArray
+		
+		shiftCipher("",0);
 
 	}
 	/**
