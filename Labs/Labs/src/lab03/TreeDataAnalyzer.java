@@ -1,4 +1,4 @@
-package lab3;
+package lab03;
 import java.io.IOException;
 import java.io.File;
 import java.util.Scanner;
