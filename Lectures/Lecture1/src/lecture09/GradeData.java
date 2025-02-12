@@ -1,4 +1,4 @@
-package lecture9;
+package lecture09;
 
 /**
  * Data type for storing a student's grade on the exam

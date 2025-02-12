@@ -1,4 +1,4 @@
-package lecture8;
+package lecture08;
 
 public class Lecture8 {
 	// END OF EXAM 1 MATERIAL 
