@@ -1,14 +1,13 @@
 package assign04;
 
 import java.util.Arrays;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
- * Class: CS 1420 Assignment 4: Method Practice
- * 
+ * Class: CS 1420 
+ * Assignment 4: Method Practice
  * @author Kenneth Morse
- * @version 2/12/2025
+ * @version 2/13/2025
  */
 
 public class MethodPractice {
@@ -39,6 +38,7 @@ public class MethodPractice {
 				+ litersToGallons(6.981));
 		System.out.println();
 
+		
 		// Test sumInRange
 		System.out.println("TESTING SUM IN RANGE");
 		// given tests
@@ -56,6 +56,7 @@ public class MethodPractice {
 
 		System.out.println();
 
+		
 		// Test shiftCypher
 		System.out.println("TESTING SHIFT CYPHER");
 		// given tests
@@ -76,6 +77,7 @@ public class MethodPractice {
 				+ (String) shiftCipher(" ~", 96) + "\"");
 		System.out.println();
 
+		
 		// Test countIntegerZeros
 		System.out.println("TESTING COUNT INTEGER ZEROS");
 		// given test
@@ -94,12 +96,13 @@ public class MethodPractice {
 				+ countIntegerZeros(new Scanner("0 hey 0 1.4 0 true 0 false 0 whoah \n\n 0")));
 		System.out.println();
 
+		
 		// Test subsequenceString
 		System.out.println("TESTING SUBSEQUENCE STRING");
 		// given tests
 		System.out.println(
 				"Checking subsequenceString(new char[]{'t', 'o', 'd', 'o', 'g', 'o'}, 2, 4). Expecting a result of \"dog\". The actual result is: \""
-						+ "" + subsequenceString(new char[] { 't', 'o', 'd', 'o', 'g', 'o' }, 2, 4));
+						+ subsequenceString(new char[] { 't', 'o', 'd', 'o', 'g', 'o' }, 2, 4) + "\"");
 		System.out.println(
 				"Checking subsequenceString(new char[]{'t', 'o', 'd', 'o', 'g', 'o'}, 1, 6). Expecting a result of \"\". The actual result is: \""
 						+ subsequenceString(new char[] { 't', 'o', 'd', 'o', 'g', 'o' }, 1, 6) + "\"");
@@ -113,10 +116,11 @@ public class MethodPractice {
 		System.out.println("Checking subsequenceString(new char[]{'a', 'b', 'c'}, 1, 2). "
 				+ "Expecting a result of \"bc\". The actual result is: \""
 				+ subsequenceString(new char[] { 'a', 'b', 'c' }, 1, 2) + "\"");
-		System.out.println("Checking subsequenceString(new char[3]{}, 1, 2). "
-				+ "Expecting a result of \"\". The actual result is: \"" + subsequenceString(new char[3], 1, 2) + "\"");
-		System.out.println();
+		System.out.println("Checking subsequenceString(new char[3], 1, 2). "
+				+ "Expecting a result of \"  \". The actual result is: \"" + subsequenceString(new char[3], 1, 2) + "\"");
+		System.out.println(); // TIL null char prints as space
 
+		
 		// Test generateCharArray
 		System.out.println("TESTING GENERATE CHAR ARRAY");
 		// given test
@@ -133,6 +137,7 @@ public class MethodPractice {
 						+ " The actual result is: " + Arrays.toString(generateCharArray(27)));
 		System.out.println();
 
+		
 		// Test mysteryMessage
 		System.out.println("TESTING MYSTERY MESSAGE");
 		// given tests
@@ -165,53 +170,55 @@ public class MethodPractice {
 	}
 
 	/**
-	 * Sums all integers in provided range, inclusive of both limits assumes that
-	 * beginning is less than or equal to end
+	 * Sums all integers in provided range, inclusive of both limits, and assumes
+	 * that beginning is less than or equal to end
 	 * 
-	 * @param beginning start of range to sum
-	 * @param end       end of range to sum
-	 * @return sum of all integers in range of beginning and end, inclusive
+	 * @param beginRange start of range to sum
+	 * @param endRange   the end of range to sum
+	 * @return rangeSum the sum of all integers between the beginning and end,
+	 *         inclusive
 	 */
-	public static int sumInRange(int beginning, int end) {
-		int sum = 0;
-		for (int i = beginning; i <= end; i++)
-			sum += i;
+	public static int sumInRange(int beginRange, int endRange) {
+		int rangeSum = 0;
+		for (int i = beginRange; i <= endRange; i++)
+			rangeSum += i;
 
-		return sum;
+		return rangeSum;
 	}
 
 	/**
 	 * basic shift cipher, shifts ascii values by number value given by key.
 	 * Possible ascii values for both input message and encrypted message range from
-	 * " " (Space Character), value 32 to "~" (tilde character) value 126 inclusive
+	 * " " (Space Character), value 32 inclusive to "~" (tilde character) value 126 inclusive
 	 * 
-	 * @param message String to be encoded
-	 * @param key     value that ascii values of chars is the given message will
-	 *                shift by
-	 * @return String of shifted message
+	 * @param plainMessage String to be encoded
+	 * @param shiftKey     value that ascii values of chars is the given message
+	 *                     will shift by
+	 * @return encryptedMessage String of shifted message
 	 */
-	public static String shiftCipher(String message, int key) {
-		String encrypted = "";
+	public static String shiftCipher(String plainMessage, int shiftKey) {
+		String encryptedMessage = "";
 
-		key = key % (127 - 32); // prevents keys higher than 95 from breaking code/producing unprintable chars
+		shiftKey = shiftKey % (127 - 32); // prevents keys higher than 95 from breaking code/producing unprintable chars
 
-		for (int i = 0; i < message.length(); i++) {
-			if (message.charAt(i) + key > 126)
-				encrypted = encrypted + (char) (message.charAt(i) + key - 127 + 32);
+		for (int i = 0; i < plainMessage.length(); i++) {
+			if (plainMessage.charAt(i) + shiftKey > 126)
+				encryptedMessage = encryptedMessage + (char) (plainMessage.charAt(i) + shiftKey - 127 + 32);
 			else
-				encrypted = encrypted + (char) (message.charAt(i) + key);
+				encryptedMessage = encryptedMessage + (char) (plainMessage.charAt(i) + shiftKey);
 		}
-		
-		return encrypted;
+
+		return encryptedMessage;
 	}
 
 	/**
 	 * counts number of integer zeros scanned by a given scanner scanner must be
 	 * given an input source before hand
 	 * 
-	 * @param inputSource, scanner, already attached to input, which you would like
-	 *                     to read from
-	 * @return the number of integer zeros contained inside the given input
+	 * @param inputSource scanner, already attached to input, which you would like
+	 *                    to read from
+	 * @return zeroCount the number of integer zeros contained inside the given
+	 *         input
 	 */
 	public static int countIntegerZeros(Scanner inputSource) {
 		int zeroCount = 0;
@@ -230,35 +237,35 @@ public class MethodPractice {
 	 * string, inclusive of both bounds If given indices are invalid for provided
 	 * array, an empty string will be returned
 	 * 
-	 * @param sequence   char array from which the subsequence string is desired
+	 * @param charArray  char array from which the subsequence string is desired
 	 * @param beginIndex index of first char from given array to start creation of
 	 *                   substring (inclusive)
 	 * @param endIndex   index of char to end substring from given array (inclusive)
 	 * @return subsequence String of chars contained within the provided char []
 	 *         between the two indices, inclusive
 	 */
-	public static String subsequenceString(char[] sequence, int beginIndex, int endIndex) {
+	public static String subsequenceString(char[] charArray, int beginIndex, int endIndex) {
 		String subsequence = "";
 
-		if (beginIndex < 0 || endIndex >= sequence.length || beginIndex > endIndex)
+		if (beginIndex < 0 || endIndex >= charArray.length || beginIndex > endIndex)
 			return subsequence;
 
 		for (int i = beginIndex; i <= endIndex; i++)
-			subsequence = subsequence + sequence[i];
+			subsequence = subsequence + charArray[i];
 
 		return subsequence;
 	}
 
 	/**
-	 * generates char array of specified length and fills with consecutive capital
-	 * letters. If array is larger than 26, will loop back to 'A'
+	 * Generates char array of specified length and fills with consecutive capital
+	 * letters. If array is larger than 26 and reaches 'Z', it will loop back to 'A'
 	 * 
-	 * @param length desired length of generated array
-	 * @return charArray char[] of specified length filled with consecutive capital
-	 *         letters
+	 * @param charArrayLength desired length of generated array
+	 * @return charArray char Array of desired length, filled with consecutive
+	 *         capital letters
 	 */
-	public static char[] generateCharArray(int length) {
-		char[] charArray = new char[length];
+	public static char[] generateCharArray(int charArrayLength) {
+		char[] charArray = new char[charArrayLength];
 
 		for (int i = 0; i < charArray.length; i++)
 			charArray[i] = (char) (i % 26 + 'A');
@@ -267,18 +274,21 @@ public class MethodPractice {
 	}
 
 	/**
-	 * generates mystery message using 3 previously defined methods
+	 * Generates mystery message using 3 previously defined methods
 	 * 
-	 * @param length initial length to use in combination with offset to call
-	 *               generateCharArray
-	 * @param offset start of subsequence to be selected from generated char []
-	 * @param shift  integer to be passed to shiftCypher to shift whole string
-	 * @return encryptedMessage a mystery encrypted message created using 3 of the
-	 *         above methods
+	 * @param messageLength initial length to use in combination with offset to call
+	 *                      generateCharArray
+	 * @param offset        start of subsequence to be selected from generated char
+	 *                      []
+	 * @param shiftKey      integer to be passed to shiftCypher to shift whole
+	 *                      string
+	 * @return encryptedMessage a String of the encrypted message created using 3 of
+	 *         the above methods
 	 */
-	public static String mysteryMessage(int length, int offset, int shift) {
-		char[] charArray = generateCharArray(length + offset);
+	public static String mysteryMessage(int messageLength, int offset, int shiftKey) {
+		char[] charArray = generateCharArray(messageLength + offset);
 		String message = subsequenceString(charArray, offset, charArray.length - 1);
-		return shiftCipher(message, shift);
+		return shiftCipher(message, shiftKey);
 	}
 }
+// formated
