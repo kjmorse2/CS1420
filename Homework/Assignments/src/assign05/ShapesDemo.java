@@ -9,7 +9,7 @@ package assign05;
  * Assignment 5
  * 
  * @author Prof. Heisler and Kenneth Morse
- * @version 2024-9-24
+ * @version 2024-2-20
  */
 
 public class ShapesDemo {
@@ -100,9 +100,6 @@ public class ShapesDemo {
 		Circle c2 = new Circle(4, 5, 6);
 		Circle c3 = new Circle(0, 0, 10);
 		Circle c4 = new Circle(88, 88, 2);
-		// TODO create two more circles, c3 and c4:
-		// c3 is an r = 10 circle at (0, 0)
-		// c4 is an r = 2 circle at (88, 88)
 		
 		// getX
 		checkResult("getX", "4", "" + c2.getX());
@@ -129,7 +126,6 @@ public class ShapesDemo {
 		checkResult("scale", "10", "" + c1.getRadius());
 		c4.scale(4);
 		checkResult("scale", "8", "" + c4.getRadius());
-		// TODO add one more check of this method
 		
 		// largerThan
 		// Note that c1 was scaled to radius 10 in the previous test, so this should be true.
@@ -151,7 +147,6 @@ public class ShapesDemo {
 		checkResult("bounding rectangle 2", "22 x 24 rectangle at (-12, -13)", "" + boundC1C2);
 		Rectangle boundC3C4 = c3.boundingRectangle(c4);
 		checkResult("bounding rectangle 2", "104 x 102 rectangle at (-8, -6)", "" + boundC3C4);
-		// TODO add one more check of this method
 	}
 	
 	/**
