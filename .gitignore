@@ -69,3 +69,19 @@ local.properties
 
 # End of https://www.toptal.com/developers/gitignore/api/eclipse
 
+# Eclipse
+.classpath
+.project
+.settings/
+ 
+# Intellij
+.idea/
+*.iml
+*.iws
+ 
+# Mac
+.DS_Store
+ 
+# Maven
+log/
+target/

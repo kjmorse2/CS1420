@@ -1,4 +1,4 @@
-package Lecture11;
+package lecture11;
 
 public class Lecture11Main {
 
