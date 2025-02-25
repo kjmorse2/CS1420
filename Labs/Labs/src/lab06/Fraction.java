@@ -120,10 +120,9 @@ public class Fraction {
 	 * @return true if the two objects are equal, false otherwise
 	 */
 	public boolean equals(Object other) {
-		if (!(other instanceof Fraction))
+		if (!(other instanceof Fraction otherFraction))
 			return false;
-		Fraction otherFraction = (Fraction) other;
-		return this.numerator == otherFraction.numerator && 
+        return this.numerator == otherFraction.numerator &&
 				this.denominator == otherFraction.denominator;
 	}
 }

@@ -5,14 +5,21 @@ package assign06;
   Assignment 6
 
   @author Kenenth Morse
- * @version 2025-2-21
+  @version 2025-2-21
  */
 
 import java.lang.IllegalArgumentException;
 
+/**
+ * The Word class represents a sequence of characters.
+ * This class provides utility methods for word manipulation such as reversing,
+ * checking for palindromes, and replacing characters, with input validation to ensure the word
+ * contains only alphabetic characters, both uppercase and lowercase.
+ */
 public class Word {
 
-	private char[] letters;
+	@SuppressWarnings("FieldMayBeFinal")
+    private char[] letters;
 
 	/**
 	 * Constructor for Word Object, sets word equal to provided String chars other
@@ -32,7 +39,7 @@ public class Word {
 	}
 
 	/**
-	 * Generates and returns a String object to represent this Word object (driver
+	 * Recursively generates and returns a String object to represent this Word object (driver
 	 * method).
 	 * 
 	 * @return a String object that represents this Word object
@@ -57,7 +64,7 @@ public class Word {
 	}
 
 	/**
-	 * checks if this.Word is a palindrome (spelled same forwards and backwards)
+	 * Recursively checks if this.Word is a palindrome (spelled same forwards and backwards)
 	 * (Driver Method)
 	 * 
 	 * @return boolean stating if this.Word is a palindrome
@@ -67,7 +74,7 @@ public class Word {
 	}
 
 	/**
-	 * checks if this.Word is a palindrome (spelled same forwards and backwards)
+	 * Recursively checks if this.Word is a palindrome (spelled same forwards and backwards)
 	 * starts on outside chars of word, and stops if no error is detected when
 	 * startIndex >= endIndex (recursive method)
 	 * 
@@ -86,47 +93,48 @@ public class Word {
 	}
 
 	/**
-	 * creates new Word object with same as this.Word object, but with all
-	 * occurrences of specified char replaced with char replacement
+	 * Creates new Word object the same as this.Word object, but with all
+	 * occurrences of specified char replaced with provided char replacement
+	 * done recursively (Driver method)
 	 * 
-	 * @param letter      to be replaced in this.Word (Driver method)
-	 * @param replacement to replace specified letter in this.Word
+	 * @param toBeReplaced      char to be replaced in this.Word
+	 * @param replacement char to replace toBeReplaced letter in this.Word
 	 * @return new Word object containing word with replaced chars
 	 */
-	public Word replaceLetter(char letter, char replacement) throws IllegalArgumentException {
-		checkInput("" + letter + replacement);
-		return new Word(replaceLetter(letter, replacement, 0));
+	public Word replaceLetter(char toBeReplaced, char replacement) throws IllegalArgumentException {
+		checkInput(new char[]{toBeReplaced, replacement});
+		return new Word(replaceLetter(toBeReplaced, replacement, 0));
 	}
 
 	/**
-	 * Replaces letter with replacement returns String of the altered word
+	 * Recursively replaces letter with replacement returns String of the altered word
 	 * (Recursive Method)
 	 * 
-	 * @param letter      char to be replaced
+	 * @param toBeReplaced      char to be replaced
 	 * @param replacement char to replace letter
 	 * @param startIndex  current Index to check and replace if needed
 	 * @return String containing this.Word letters[] with replaced chars
 	 */
-	private String replaceLetter(char letter, char replacement, int startIndex) {
+	private String replaceLetter(char toBeReplaced, char replacement, int startIndex) {
 		if (startIndex == letters.length) {
 			return "";
 		}
-		char current = (letters[startIndex] == letter) ? replacement : letters[startIndex];
-		return String.valueOf(current) + replaceLetter(letter, replacement, startIndex + 1);
+		char current = (letters[startIndex] == toBeReplaced) ? replacement : letters[startIndex];
+        return current + replaceLetter(toBeReplaced, replacement, startIndex + 1);
 	}
 
 	/**
-	 * reverses this.Word's letters[] order (Driver method)
+	 * Recursively reverses this.Word's letters[] order (Driver method)
 	 */
 	public void reverse() {
 		reverse(0, letters.length - 1);
 	}
 
 	/**
-	 * reverses this.Word's letters[] order (Recursive method
+	 * Recursively reverses this.Word's letters[] order (Recursive method)
 	 * 
-	 * @param startIndex
-	 * @param endIndex
+	 * @param startIndex tracker for char to be swapped (from beginning)
+	 * @param endIndex tracker for char to be swapped (from end)
 	 */
 	private void reverse(int startIndex, int endIndex) {
 		if (startIndex >= endIndex) {
@@ -139,8 +147,8 @@ public class Word {
 	}
 
 	/**
-	 * Input validation for class, all chars/strings used must only contain letters
-	 * (a-z and A-Z). Many chars must be concatenated to be checked by method
+	 * Input validation for class, all chars/strings contained in a Word must only contain letters
+	 * (a-z and A-Z), for String input
 	 * 
 	 * @param chars String of chars to be checked
 	 */
@@ -151,5 +159,19 @@ public class Word {
 				throw new IllegalArgumentException("All characters must be letters");
 			}
 		}
-	}
+    }
+
+	/**
+	 * Input validation for class, all chars/strings contained in a Word must only contain letters
+	 * (a-z and A-Z), for char array (char[]) input
+	 *
+	 * @param chars array of chars to be checked
+	 */
+	private void checkInput(char[] chars) {
+		for (char c : chars) {
+			if (!(c >= 'A' && c <= 'Z') && !(c >= 'a' && c <= 'z')) {
+				throw new IllegalArgumentException("All characters must be letters");
+			}
+		}
+    }
 }
