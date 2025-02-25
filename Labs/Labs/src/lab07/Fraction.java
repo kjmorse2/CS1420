@@ -79,11 +79,10 @@ public class Fraction {
 	 * @return true if the two objects are equal, false otherwise
 	 */
 	public boolean equals(Object other) {
-		if(!(other instanceof Fraction))
+		if(!(other instanceof Fraction otherFraction))
 			return false;
-		Fraction otherFraction = (Fraction) other;
 
-		Fraction thisCopy = this.copyOf();
+        Fraction thisCopy = this.copyOf();
 		Fraction otherCopy = otherFraction.copyOf();
 
 		thisCopy.reduce();
