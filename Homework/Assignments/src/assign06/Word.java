@@ -1,10 +1,10 @@
 package assign06;
 
-/**
- * Class: CS1420
- * Assignment 6
- * 
- * @author Kenenth Morse
+/*
+  Class: CS1420
+  Assignment 6
+
+  @author Kenenth Morse
  * @version 2025-2-21
  */
 

@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
  * @author Prof. Parker and Kenenth Morse
  * @version 2025-2-21
  */
-public class WordTester {
+public class WordTests {
 
 	/**
 	 * Test that the Word class constructor properly throws an exception when the
@@ -21,9 +21,7 @@ public class WordTester {
 	 */
 	@Test
 	public void testConstructorException() {
-		assertThrows(IllegalArgumentException.class, () -> {
-			new Word("hel!o");
-		});
+		assertThrows(IllegalArgumentException.class, () -> new Word("hel!o"));
 	}
 
 	/**
@@ -127,9 +125,7 @@ public class WordTester {
 	@Test
 	public void testReplaceLetterExceptionFirstArg() {
 		Word oneLetter = new Word("a");
-		assertThrows(IllegalArgumentException.class, () -> {
-			oneLetter.replaceLetter(' ', 'l');
-		});
+		assertThrows(IllegalArgumentException.class, () -> oneLetter.replaceLetter(' ', 'l'));
 	}
 
 	/**
@@ -138,9 +134,7 @@ public class WordTester {
 	@Test
 	public void testReplaceLetterExceptionSecondArg() {
 		Word oneLetter = new Word("a");
-		assertThrows(IllegalArgumentException.class, () -> {
-			oneLetter.replaceLetter('l', ' ');
-		});
+		assertThrows(IllegalArgumentException.class, () -> oneLetter.replaceLetter('l', ' '));
 	}
 
 	/**
