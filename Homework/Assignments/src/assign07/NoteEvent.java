@@ -12,11 +12,33 @@ public class NoteEvent extends AudioEvent{
     }
 
     public void execute(SimpleSynthesizer synth){
-        synth.noteOn(channel, Pitch);
+        synth.noteOn(this.getChannel(), Pitch);
     }
 
     public void complete(SimpleSynthesizer synth){
-        synth.noteOff(channel, Pitch);
+        synth.noteOff(this.getChannel(), Pitch);
+    }
+
+    public int compareTo(AudioEvent other){
+        int thisEventTime = this.getEventTime();
+        int otherEventTime = other.getEventTime();
+        int difference  = thisEventTime - otherEventTime;
+        if(difference < 0){
+            return -1;
+        } else if(difference > 0){
+            return 1;
+        }
+        if(other instanceof NoteEvent){
+            return 0;
+        }
+        else{
+            return 1;
+        }
+
+    }
+
+    public String toString(){
+        return "NoteEvent[" + super.toString() + ", " + Duration + ", =" + Pitch + "]";
     }
 
 }

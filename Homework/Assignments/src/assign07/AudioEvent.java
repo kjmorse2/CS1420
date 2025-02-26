@@ -19,12 +19,12 @@ public abstract class AudioEvent implements Comparable<AudioEvent>{
         return channel;
     }
 
-    public abstract void execute(SimpleSynthesizer symch){
+    public abstract void execute(SimpleSynthesizer synth);
 
-    }
+    public abstract void complete(SimpleSynthesizer synth);
 
-    public abstract void complete(SimpleSynthesizer synth){
-
-    }
+    public String toString(){
+        return eventTime + ", " + channel;
+    };
 
 }
