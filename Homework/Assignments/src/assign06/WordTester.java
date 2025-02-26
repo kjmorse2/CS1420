@@ -15,11 +15,16 @@ import org.junit.jupiter.api.Test;
 //Tester for the Word class
 public class WordTester {
 
-    /**
-     * CONSTRUCTOR
-     * /
-     * <p>
-     * /**
+    private static final String FULL_ALPHABET_STRING = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final String EMPTY_STRING = "";
+    private static final String racecar_STRING = "racecar";
+    private static final String hello_STRING = "hello";
+    private static final String Hello_STRING = "Hello";
+
+    //CONSTRUCTOR
+
+
+     /**
      * Test that the Word class constructor properly throws an exception when the
      * given string contains characters that are not a-z or A-Z.
      */
@@ -42,7 +47,7 @@ public class WordTester {
      * given string only contains characters that are not a-z or A-Z. (edge case)
      */
     @Test
-    public void testExceptionThrownWithSingleInvalidCharacter() {
+    public void testConstructorThrowsExceptionForSingleInvalidCharacter(){
         assertThrows(IllegalArgumentException.class, () -> new Word("!"), "Method should throw an exception in response to invalid character");
     }
 
@@ -52,7 +57,7 @@ public class WordTester {
     @Test
     public void testExceptionNotThrownPermittedString() {
         assertDoesNotThrow(() -> {
-            new Word("hello");
+            new Word(hello_STRING);
         }, "Method should not throw an exception in response permitted string");
     }
 
@@ -61,11 +66,10 @@ public class WordTester {
      */
     @Test
     public void testExceptionNotThrownSingleChars() {
-        String alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        char[] alphabetArray = alphabet.toCharArray();
+        char[] alphabetArray = FULL_ALPHABET_STRING.toCharArray();
         for (char c : alphabetArray) {
             assertDoesNotThrow(() -> {
-                new Word(("" + c));
+                new Word((EMPTY_STRING + c));
             }, "Method should not throw an exception single char string");
         }
     }
@@ -76,7 +80,7 @@ public class WordTester {
     @Test
     public void testExceptionNotThrown() {
         assertDoesNotThrow(() -> {
-            new Word("");
+            new Word(EMPTY_STRING);
         }, "Method should not throw an exception in response to empty string");
     }
 
@@ -87,8 +91,8 @@ public class WordTester {
      */
     @Test
     public void testToStringPermittedString() {
-        Word normal = new Word("Normal");
-        assertEquals("Normal", normal.toString(), "Method should set the private instance variable to the given string");
+        Word Hello = new Word(Hello_STRING);
+        assertEquals(Hello_STRING, Hello.toString(), "Method should set the private instance variable to the given string");
     }
 
     /**
@@ -107,8 +111,8 @@ public class WordTester {
      */
     @Test
     public void testToStringLength0() {
-        Word normal = new Word("");
-        assertEquals("", normal.toString());
+        Word normal = new Word(EMPTY_STRING);
+        assertEquals(EMPTY_STRING, normal.toString());
     }
 
     /**
@@ -147,7 +151,7 @@ public class WordTester {
      */
     @Test
     public void testIsPalindromeOddLength() {
-        Word palindrome = new Word("racecar");
+        Word palindrome = new Word(racecar_STRING);
         assertTrue(palindrome.isPalindrome());
     }
 
@@ -175,7 +179,7 @@ public class WordTester {
      */
     @Test
     public void testIsPalindromeEmpty() {
-        Word emptyPalindrome = new Word("");
+        Word emptyPalindrome = new Word(EMPTY_STRING);
         assertTrue(emptyPalindrome.isPalindrome());
     }
 
@@ -204,16 +208,20 @@ public class WordTester {
      */
     @Test
     public void testReplaceLetterAlphabet() {
-        String alphabetMinus_a_ = "bcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        char[] alphabetArray = alphabetMinus_a_.toCharArray();
-        Word alphabetMinus_a_Word = new Word(alphabetMinus_a_);
+        char[] alphabetArray = FULL_ALPHABET_STRING.toCharArray();
+        char[] alphabetMinus_a_Array = new char[alphabetArray.length - 1];
+        for(int i = 1; i < alphabetArray.length; i++ ){
+            alphabetMinus_a_Array[i - 1] = alphabetArray[i];
+        }
+        String alphabetMinus_a_String = new String(alphabetMinus_a_Array);
+        Word alphabetMinus_a_Word = new Word(alphabetMinus_a_String);
         Word replacedWord;
         for (char currentChar : alphabetArray) {
             replacedWord = alphabetMinus_a_Word.replaceLetter(currentChar, 'a');
             assertEquals(-1, replacedWord.toString().indexOf(currentChar), "Failed to replace character: " + currentChar);
         }
-        String alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        Word alphabetWord = new Word(alphabet);
+
+        Word alphabetWord = new Word(FULL_ALPHABET_STRING);
         replacedWord = alphabetWord.replaceLetter('a', 'b');
         assertEquals(-1, replacedWord.toString().indexOf('a'), "Failed to replace character: " + 'a');
     }
@@ -223,8 +231,9 @@ public class WordTester {
      */
     @Test
     public void testReplaceLetterNotInWord() {
-        Word hello = new Word("hello");
-        assertEquals("hello", hello.replaceLetter('w', 's').toString());
+        String test = hello_STRING;
+        Word hello_Word = new Word(hello_STRING);
+        assertEquals(hello_STRING, hello_Word.replaceLetter('w', 's').toString());
     }
 
     /**
@@ -241,8 +250,8 @@ public class WordTester {
      */
     @Test
     public void testReplaceLetterWithSame() {
-        Word lowerCaseScream = new Word("Hello");
-        assertEquals("Hello", lowerCaseScream.replaceLetter('l', 'l').toString());
+        Word lowerCaseScream = new Word(Hello_STRING);
+        assertEquals(Hello_STRING, lowerCaseScream.replaceLetter('l', 'l').toString());
     }
 
     // REVERSE
@@ -252,9 +261,9 @@ public class WordTester {
      */
     @Test
     public void testReverseHello() {
-        Word hello = new Word("hello");
-        hello.reverse();
-        assertEquals("olleh", hello.toString());
+        Word hello_Word = new Word(hello_STRING);
+        hello_Word.reverse();
+        assertEquals("olleh", hello_Word.toString());
     }
 
     /**
@@ -262,9 +271,9 @@ public class WordTester {
      */
     @Test
     public void testReverseEmpty() {
-        Word empty = new Word("");
+        Word empty = new Word(EMPTY_STRING);
         empty.reverse();
-        assertEquals("", empty.toString());
+        assertEquals(EMPTY_STRING, empty.toString());
     }
 
     /**
@@ -282,7 +291,7 @@ public class WordTester {
      */
     @Test
     public void testReverseAlphabet() {
-        Word alphabet = new Word("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
+        Word alphabet = new Word(FULL_ALPHABET_STRING);
         alphabet.reverse();
         assertEquals("ZYXWVUTSRQPONMLKJIHGFEDCBAzyxwvutsrqponmlkjihgfedcba", alphabet.toString());
     }
@@ -292,9 +301,9 @@ public class WordTester {
      */
     @Test
     public void testReversePalindrome() {
-        Word raceCar = new Word("racecar");
+        Word raceCar = new Word(racecar_STRING);
         raceCar.reverse();
-        assertEquals("racecar", raceCar.toString());
+        assertEquals(racecar_STRING, raceCar.toString());
     }
 
 }
